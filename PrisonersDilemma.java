@@ -1,9 +1,10 @@
-import java.util.Scanner;
+import java.util.*;
+import java.lang.*;
 /**
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Pre-Alpha v1.2)
+ * @version (Pre-Alpha v1.3)
  */
 public class PrisonersDilemma
 {
@@ -15,14 +16,14 @@ public class PrisonersDilemma
         String playerInput = "";; //String holding the players' input, the = ""; is just to say it's empty
         String compResponse = ""; //String holding the computers' input, the = ""; is just to say it's empty
         /** various integers **/
-        //int round = 1; // int to count the rounds  - commented because I don't need it yet
+        int round = 1;
         /** integers for scores **/
         int playerScore = 0; // int recording the score of the player
         int compScore = 0; // int recording the score of the computer
-        /** integers for ratio **/
-        int compCoop = 0; // int recording the number of times the computer cooperated
-        int compDefect = 0; // int recording the number of times the computer defected
-        float compRatio = 0; // int for finding the ratio of computer cooperates : computer defects
+        /** floats for ratio **/
+        float compCoop = 0; // float recording the number of times the computer cooperated
+        float compDefect = 0; // float recording the number of times the computer defected
+        float compRatio = 0; // float for finding the ratio of computer cooperates : computer defects
         /** bool for game end **/
         boolean finish = false; // boolean dictating if the game is still going
         while (!finish){
@@ -49,8 +50,13 @@ public class PrisonersDilemma
                 default : System.out.println("Invalid input");
                             break;
                  }
-            /** DEBUG: THIS compResponse = "x"; IS JUST A PLACE HOLDER **/
-            compResponse = "c";
+            /** DEBUG: THIS ROUND TO FIND COMPUTER INPUT IS JUST FOR TESTING
+            if(round % 2 == 0)
+                {compResponse = "c";}
+            else
+                {compResponse = "d";
+            }
+            **/
             switch (compResponse) {
                 /** Case "c" is if the computer cooperates, case "d" is if the computer defects **/
                 case "c" : compCoop += 1; //This is saying "if computer cooperates, add 1 to compCoop
@@ -63,7 +69,7 @@ public class PrisonersDilemma
                 // This^ line is an error message
                            break;
             }
-            //round += 1; - commented because I don't need it yet
+            round += 1;
             /** Finding the "trust percentage" **/
             compRatio = compCoop / (compCoop + compDefect);
             compRatio *= 100;
