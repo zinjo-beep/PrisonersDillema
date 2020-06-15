@@ -17,7 +17,7 @@ public class PrisonersDilemma
         String compResponse = ""; //String holding the computers' input, the = ""; is just to say it's empty
         /** various variables **/
         int round = 0;
-        String compInputs[] = new String[20000]; // array for holding the computer's inputs, the "= {}" is to say the array is empty but initialized
+        String compInputs[] = new String[]{""}; // array for holding the computer's inputs, the "= {}" is to say the array is empty but initialized
         /** integers for scores **/
         int playerScore = 0; // int recording the score of the player
         int compScore = 0; // int recording the score of the computer
@@ -53,9 +53,9 @@ public class PrisonersDilemma
                  }
             /** DEBUG: THIS ROUND TO FIND COMPUTER INPUT IS JUST FOR TESTING **/
             if(round % 2 == 0)
-                {compResponse = "c";}
+                {compResponse = "d";}
             else
-                {compResponse = "d";
+                {compResponse = "c";
             }
             switch (compResponse) {
                 /** Case "c" is if the computer cooperates, case "d" is if the computer defects **/
@@ -71,11 +71,13 @@ public class PrisonersDilemma
                 // This^ line is an error message
                            break;
             }
-            for(int loop = compInputs.length-10; loop < compInputs.length; loop++) {
-                if(compInputs[loop] == "c") {
-                    compCoop ++;
-                }
-                else{compDefect ++;
+            while(round>10){
+                for(int loop = compInputs.length-10; loop < compInputs.length; loop++) {
+                    if(compInputs[loop] == "c") {
+                        compCoop =+ 1;
+                    }
+                    else{compDefect =+ 1;
+                    }
                 }
             }
             //The compInputs array will hold all of the computer's cooperations and defects in order so I can just use the most recent inputs to find the ratio
