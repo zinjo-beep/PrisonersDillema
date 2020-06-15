@@ -4,7 +4,7 @@ import java.lang.*;
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Pre-Alpha v1.3)
+ * @version (Pre-Alpha v1.4.1)
  */
 public class PrisonersDilemma
 {
@@ -15,8 +15,9 @@ public class PrisonersDilemma
         /** Player and computer input strings **/
         String playerInput = "";; //String holding the players' input, the = ""; is just to say it's empty
         String compResponse = ""; //String holding the computers' input, the = ""; is just to say it's empty
-        /** various integers **/
-        int round = 1;
+        /** various variables **/
+        int round = 0;
+        String compInputs[] = new String[20000]; // array for holding the computer's inputs, the "= {}" is to say the array is empty but initialized
         /** integers for scores **/
         int playerScore = 0; // int recording the score of the player
         int compScore = 0; // int recording the score of the computer
@@ -45,30 +46,39 @@ public class PrisonersDilemma
                             // This^ line is for if both the player and computer defect
                             break;
                 case "f" : System.out.println("Game Over");
-                           finish = true;
+                           finish = true; //turns finish on to turn off the "while (!finish)" loop
                             break;
                 default : System.out.println("Invalid input");
                             break;
                  }
-            /** DEBUG: THIS ROUND TO FIND COMPUTER INPUT IS JUST FOR TESTING
+            /** DEBUG: THIS ROUND TO FIND COMPUTER INPUT IS JUST FOR TESTING **/
             if(round % 2 == 0)
                 {compResponse = "c";}
             else
                 {compResponse = "d";
             }
-            **/
             switch (compResponse) {
                 /** Case "c" is if the computer cooperates, case "d" is if the computer defects **/
-                case "c" : compCoop += 1; //This is saying "if computer cooperates, add 1 to compCoop
-                           System.out.println("DEBUG: The computer cooperated");
+                case "c" :  //This is saying "if computer cooperates, add 1 to compCoop"
+                           System.out.println("DEBUG: The computer cooped");
+                           compInputs[round]="c";
                            break;
-                case "d" : compDefect += 1; //This is saying "if computer defects, add 1 to compDefect
+                case "d" : compDefect += 1; //This is saying "if computer defects, add 1 to compDefect"
                            System.out.println("DEBUG: The computer defected");
+                           compInputs[round]="d";
                            break;
                 default : System.out.println("Something went wrong, the computer entered an invalid input");
                 // This^ line is an error message
                            break;
             }
+            for(int loop = compInputs.length-10; loop < compInputs.length; loop++) {
+                if(compInputs[loop] == "c") {
+                    compCoop ++;
+                }
+                else{compDefect ++;
+                }
+            }
+            //The compInputs array will hold all of the computer's cooperations and defects in order so I can just use the most recent inputs to find the ratio
             round += 1;
             /** Finding the "trust percentage" **/
             compRatio = compCoop / (compCoop + compDefect);
