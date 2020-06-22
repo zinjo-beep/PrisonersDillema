@@ -4,7 +4,7 @@ import java.lang.*;
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Pre-Alpha v1.4.1)
+ * @version (Alpha v2.0)
  */
 public class PrisonersDilemma
 {
@@ -17,7 +17,7 @@ public class PrisonersDilemma
         String compResponse = ""; //String holding the computers' input, the = ""; is just to say it's empty
         /** various variables **/
         int round = 0;
-        String compInputs[] = new String[]{""}; // array for holding the computer's inputs, the "= {}" is to say the array is empty but initialized
+        String compInputs[] = new String[20000]; // array for holding the computer's inputs, the "= {}" is to say the array is empty but initialized
         /** integers for scores **/
         int playerScore = 0; // int recording the score of the player
         int compScore = 0; // int recording the score of the computer
@@ -59,7 +59,7 @@ public class PrisonersDilemma
             }
             switch (compResponse) {
                 /** Case "c" is if the computer cooperates, case "d" is if the computer defects **/
-                case "c" :  //This is saying "if computer cooperates, add 1 to compCoop"
+                case "c" : compCoop += 1; //This is saying "if computer cooperates, add 1 to compCoop"
                            System.out.println("DEBUG: The computer cooped");
                            compInputs[round]="c";
                            break;
@@ -71,12 +71,15 @@ public class PrisonersDilemma
                 // This^ line is an error message
                            break;
             }
-            while(round>10){
-                for(int loop = compInputs.length-10; loop < compInputs.length; loop++) {
-                    if(compInputs[loop] == "c") {
-                        compCoop =+ 1;
+            if(round>10){ // The if(round>10) is so the array doesn't detect something out of bounds like -9 on the first round
+                compCoop = 0;
+                compDefect = 0;
+                for(int loop = round-10; loop < round; loop++) {
+                    if(compInputs[loop].equals("c")) {
+                        compCoop += 1;
                     }
-                    else{compDefect =+ 1;
+                    if(compInputs[loop].equals("d")) {
+                        compDefect += 1;
                     }
                 }
             }
@@ -86,6 +89,7 @@ public class PrisonersDilemma
             compRatio = compCoop / (compCoop + compDefect);
             compRatio *= 100;
             /** Score displays **/
+            System.out.println("DEBUG: round: "+ round);
             System.out.println("DEBUG: compRatio is "+ compRatio);
             System.out.println("DEBUG: compCoop is "+ compCoop);
             System.out.println("DEBUG: compDefect is "+ compDefect);
