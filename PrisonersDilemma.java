@@ -4,7 +4,7 @@ import java.lang.*;
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Alpha v2.1)
+ * @version (Alpha v2.2)
  * DISCLAIMER: This program and the decisions it make's will be labeled to as "the program/computer" & "the program/computer's moves"
  * The individual opposing the computer whether they be human or another computer is labeled as "the opponent/player"
  * 
@@ -77,7 +77,7 @@ public class PrisonersDilemma
                 // This^ line is an error message
                            break;
             }
-            if(round>10){ // The if(round>10) is so the array doesn't detect something out of bounds like -9 on the first round
+            if(round>9){ // The if(round>10) is so the array doesn't detect something out of bounds like -9 on the first round
                 oppoCoop = 0;
                 oppoDefect = 0;
                 for(int loop = round-10; loop < round; loop++) {
