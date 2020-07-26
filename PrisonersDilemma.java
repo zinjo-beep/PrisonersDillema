@@ -4,7 +4,7 @@ import java.lang.*;
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Alpha v2.5)
+ * @version (Alpha v2.6)
  * DISCLAIMER: This program and the decisions it make's will be labeled to as "the program/computer" & "the program/computer's moves"
  * The individual opposing the computer whether they be human or another computer is labeled as "the opponent/player"
  *
@@ -43,7 +43,8 @@ public class PrisonersDilemma
         // initialise instance variables
         Scanner inputStream = new Scanner (System.in); //Scanner for players input
         /** Player and computer input strings **/
-        String oppoInput = "";; //String holding the players' input, the = ""; is just to say it's empty
+        String menuInput = ""; //String holding the players' input in the menu, the = ""; is just to say it's empty
+        String oppoInput = ""; //String holding the players' input in the game, the = ""; is just to say it's empty
         String compResponse = ""; //String holding the computers' input, the = ""; is just to say it's empty
         /** various variables **/
         int round = 0;
@@ -55,8 +56,53 @@ public class PrisonersDilemma
         float oppoCoop = 0; // float recording the number of times the computer cooperated
         float oppoDefect = 0; // float recording the number of times the computer defected
         float oppoRatio = 0; // float for finding the ratio of computer cooperates : computer defects
+        /** integers for maximum and minimum round numbers **/
+        int minRounds = 10;
+        int maxRounds = 40;
+        String minRoundsInput = ""; // A temporary variable that gets transferred to an integer if the player decides to change round number
+        String maxRoundsInput = ""; // ^
         /** bool for game end **/
-        boolean finish = false; // boolean dictating if the game is still going
+        boolean finish = true; // boolean dictating if the game is still going
+        
+        /** pre-round settings: **/ //This will be the little welcome menu before the game starts
+        System.out.println("Welcome to my prisoners dilemma code");
+        System.out.println("Enter 'S' to start the program without changing settings (10-40 rounds).");
+        System.out.println("Enter 'R' to change the number of rounds.");
+        System.out.println("Enter 'L' to learn more about the prisoners' dilemma");
+        System.out.println("Enter 'D' to open the debug menu.");
+        menuInput=(inputStream.nextLine()); 
+        switch (menuInput){
+            case "s" : case "S" :
+                menuInput = ""; //resetting the menuInput
+                finish = false; //setting finish to false to start the game
+                break;
+                
+            case "r" : case "R" :
+                menuInput = ""; //resetting the menuInput
+                System.out.println("Please set the minimum number of rounds you want to play through (In numbers, eg: 1, 2, 3, not one, two, three):");
+                minRoundsInput=(inputStream.nextLine());
+                minRounds = Integer.parseInt(minRoundsInput);
+                System.out.println("Please set the maximum number of rounds you want to play through (In numbers again, maximum 20000.):");
+                maxRoundsInput=(inputStream.nextLine());
+                maxRounds = Integer.parseInt(maxRoundsInput);
+                finish = false;
+                break;
+                
+            case "l" : case "L" :
+                menuInput = ""; //resetting the menuInput
+                System.out.println("Here's a link to a short video explaining the concept of the prisoners' dilemma: https://bit.ly/2X0Vq9b");
+                System.out.println("The difference between my program and this video's point system is the point distribution.");
+                System.out.println("In my system, if both parties cooperate they both get 1 point, if they both defect they both lost 3 points, if");
+                System.out.println("one cooperates & the other defects, the one who cooperate loses 5 points and the one who defected gains 2 points.");
+                finish = false;
+                break;
+                
+            case "d" : case "D" :
+                menuInput = ""; //resetting the menuInput
+                System.out.println("Enter '");
+                break;
+            
+        }
         while (!finish){
             System.out.println("--------------------");
             System.out.println("Cooperate or Defect?");
