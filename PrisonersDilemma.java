@@ -1,10 +1,11 @@
+
 import java.util.*;
 import java.lang.*;
 /**
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Alpha v2.7)
+ * @version (Beta 3.0)
  * DISCLAIMER: This program and the decisions it make's will be labeled to as "the program/computer" & "the program/computer's moves"
  * The individual opposing the computer whether they be human or another computer is labeled as "the opponent/player"
  *
@@ -64,7 +65,7 @@ public class PrisonersDilemma
         String maxRoundsInput = ""; // ^
         /** booleans **/
         boolean finish = true; // boolean dictating if the game is still going
-        boolean debug  = false; // boolean that will either show or not show the debug variables
+        boolean debug = false; // boolean that will either show or not show the debug variables
         boolean checklist = false; //boolean to dictate whether checklist or clarify method is used
         boolean clarify = true; //  ^for players input, by default clarify is used.        
         /** pre-round settings: **/ //This will be the little welcome menu before the game starts
@@ -120,12 +121,13 @@ public class PrisonersDilemma
         }
         /** Here's the section finding the random number the rounds the game will be **/
         totalRounds = (int)(Math.random() * (maxRounds - minRounds + 1) + minRounds); //This just does a calculation to find a random number between max & min rounds
-        if(debug = true){
+        if(debug){
+            System.out.println("DEBUG: Debug is: "+debug);
             System.out.println("DEBUG: Minimum number of rounds: "+minRounds);
             System.out.println("DEBUG: Maximum number of rounds: "+maxRounds);
             System.out.println("DEBUG: Number of rounds after going through random: "+totalRounds);
         }
-        while (!finish){
+        while (!finish & round < totalRounds){
             System.out.println("--------------------");
             System.out.println("Cooperate or Defect?");
             oppoInput=clarifyInput(inputStream.nextLine()); // This takes the input of the scanner, then sends it to the "clarifyInput" function
@@ -151,7 +153,7 @@ public class PrisonersDilemma
                  }
             //This chunk of code below is deciding the computer's move based on the ratio of the player's moves
             if(oppoRatio < 35) 
-                {compResponse = "d";}
+                {compResponse = "d";} //If these are being weird change the = to .equals
             else if(oppoRatio < 55)
                 {compResponse = "c";}
             else if(oppoRatio < 80)
@@ -194,7 +196,7 @@ public class PrisonersDilemma
             oppoRatio = oppoCoop / (oppoCoop + oppoDefect); //finds oppoRatio through the power of math
             oppoRatio *= 100;
             /** Score displays **/
-            if(debug = true){ //This boolen checker turns on if the debug variables have been enabled from the debug menu
+            if(debug){ //This boolen checker turns on if the debug variables have been enabled from the debug menu
                 System.out.println("DEBUG: round: "+ round);
                 System.out.println("DEBUG: oppoRatio is "+ oppoRatio);
                 System.out.println("DEBUG: oppoCoop is "+ oppoCoop);
@@ -204,4 +206,5 @@ public class PrisonersDilemma
             System.out.println("The comp score is "+ compScore);
             }
     }
+
 }
