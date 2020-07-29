@@ -4,7 +4,7 @@ import java.lang.*;
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Alpha v2.6)
+ * @version (Alpha v2.7)
  * DISCLAIMER: This program and the decisions it make's will be labeled to as "the program/computer" & "the program/computer's moves"
  * The individual opposing the computer whether they be human or another computer is labeled as "the opponent/player"
  *
@@ -47,7 +47,7 @@ public class PrisonersDilemma
         String oppoInput = ""; //String holding the players' input in the game, the = ""; is just to say it's empty
         String compResponse = ""; //String holding the computers' input, the = ""; is just to say it's empty
         /** various variables **/
-        int round = 0;
+        int round = 0; //counts the round
         String oppoInputs[] = new String[20000]; // array for holding the opponents's inputs, the "String[20000]" is to say the array holds a max 20000 strings
         /** integers for scores **/
         int oppoScore = 0; // int recording the score of the player
@@ -59,17 +59,20 @@ public class PrisonersDilemma
         /** integers for maximum and minimum round numbers **/
         int minRounds = 10;
         int maxRounds = 40;
+        int totalRounds = 0; // The 0 is temporary, and whatever the random number generates will be applied to totalRounds
         String minRoundsInput = ""; // A temporary variable that gets transferred to an integer if the player decides to change round number
         String maxRoundsInput = ""; // ^
-        /** bool for game end **/
+        /** booleans **/
         boolean finish = true; // boolean dictating if the game is still going
-        
+        boolean debug  = false; // boolean that will either show or not show the debug variables
+        boolean checklist = false; //boolean to dictate whether checklist or clarify method is used
+        boolean clarify = true; //  ^for players input, by default clarify is used.        
         /** pre-round settings: **/ //This will be the little welcome menu before the game starts
         System.out.println("Welcome to my prisoners dilemma code");
         System.out.println("Enter 'S' to start the program without changing settings (10-40 rounds).");
         System.out.println("Enter 'R' to change the number of rounds.");
         System.out.println("Enter 'L' to learn more about the prisoners' dilemma");
-        System.out.println("Enter 'D' to open the debug menu.");
+        System.out.println("Enter 'D' to turn on debug mode.");
         menuInput=(inputStream.nextLine()); 
         switch (menuInput){
             case "s" : case "S" :
@@ -79,34 +82,54 @@ public class PrisonersDilemma
                 
             case "r" : case "R" :
                 menuInput = ""; //resetting the menuInput
-                System.out.println("Please set the minimum number of rounds you want to play through (In numbers, eg: 1, 2, 3, not one, two, three):");
-                minRoundsInput=(inputStream.nextLine());
-                minRounds = Integer.parseInt(minRoundsInput);
-                System.out.println("Please set the maximum number of rounds you want to play through (In numbers again, maximum 20000.):");
-                maxRoundsInput=(inputStream.nextLine());
-                maxRounds = Integer.parseInt(maxRoundsInput);
-                finish = false;
+                System.out.println("Please set the minimum number of rounds you want to play through");
+                System.out.println("(In numbers, eg: 1, 2, 3, not one, two, three):");
+                minRoundsInput=(inputStream.nextLine()); //user inputs minimum number of rounds
+                minRounds = Integer.parseInt(minRoundsInput);//turns string into int
+                System.out.println("Please set the maximum number of rounds you want to play through");
+                System.out.println("(In numbers again, maximum 20000.):");
+                maxRoundsInput=(inputStream.nextLine()); //user inputs maximum number of rounds
+                maxRounds = Integer.parseInt(maxRoundsInput); //turns string into int
+                finish = false; //Turns on the actual program
                 break;
                 
             case "l" : case "L" :
                 menuInput = ""; //resetting the menuInput
-                System.out.println("Here's a link to a short video explaining the concept of the prisoners' dilemma: https://bit.ly/2X0Vq9b");
-                System.out.println("The difference between my program and this video's point system is the point distribution.");
-                System.out.println("In my system, if both parties cooperate they both get 1 point, if they both defect they both lost 3 points, if");
-                System.out.println("one cooperates & the other defects, the one who cooperate loses 5 points and the one who defected gains 2 points.");
-                finish = false;
+                System.out.println("Here's a link to a short video explaining the concept of the");
+                System.out.println("prisoners' dilemma: https://bit.ly/2X0Vq9b");
+                System.out.println("The difference between my program and this video's point system");
+                System.out.println("is the point distribution. In my system, if both parties cooperate");
+                System.out.println("they both get 1 point, if they both defect they both lost 3 points,");
+                System.out.println("if one cooperates & the other defects, the one who cooperate loses");
+                System.out.println("5 points and the one who defected gains 2 points.");
+                finish = false; //setting finish to false to start the game
                 break;
                 
             case "d" : case "D" :
                 menuInput = ""; //resetting the menuInput
-                System.out.println("Enter '");
+                System.out.println("Debug variables at the end of the rounds have been turned on");
+                debug = true; //turns on debug info each round
+                finish = false; //setting finish to false to start the game
                 break;
             
+            default :
+                menuInput = ""; //resetting the menuInput
+                System.out.println("Invalid input, please enter again");
+                menuInput=(inputStream.nextLine()); //allows the user to enter in the scanner again
+                break;
+        }
+        /** Here's the section finding the random number the rounds the game will be **/
+        totalRounds = (int)(Math.random() * (maxRounds - minRounds + 1) + minRounds); //This just does a calculation to find a random number between max & min rounds
+        if(debug = true){
+            System.out.println("DEBUG: Minimum number of rounds: "+minRounds);
+            System.out.println("DEBUG: Maximum number of rounds: "+maxRounds);
+            System.out.println("DEBUG: Number of rounds after going through random: "+totalRounds);
         }
         while (!finish){
             System.out.println("--------------------");
             System.out.println("Cooperate or Defect?");
             oppoInput=clarifyInput(inputStream.nextLine()); // This takes the input of the scanner, then sends it to the "clarifyInput" function
+            
             switch (oppoInput) {
                 /** Case "c" is if the player cooperates, case "d" is if the player defects **/
                 case "c" : System.out.println("You cooperated");
@@ -127,7 +150,7 @@ public class PrisonersDilemma
                            break;
                  }
             //This chunk of code below is deciding the computer's move based on the ratio of the player's moves
-                 if(oppoRatio < 35) 
+            if(oppoRatio < 35) 
                 {compResponse = "d";}
             else if(oppoRatio < 55)
                 {compResponse = "c";}
@@ -171,10 +194,12 @@ public class PrisonersDilemma
             oppoRatio = oppoCoop / (oppoCoop + oppoDefect); //finds oppoRatio through the power of math
             oppoRatio *= 100;
             /** Score displays **/
-            //System.out.println("DEBUG: round: "+ round); - commented out incase need to use later
-            System.out.println("DEBUG: oppoRatio is "+ oppoRatio);// - commented out incase need to use later
-            //System.out.println("DEBUG: oppoCoop is "+ oppoCoop); - commented out incase need to use later
-            //System.out.println("DEBUG: oppoDefect is "+ oppoDefect); - commented out incase need to use later
+            if(debug = true){ //This boolen checker turns on if the debug variables have been enabled from the debug menu
+                System.out.println("DEBUG: round: "+ round);
+                System.out.println("DEBUG: oppoRatio is "+ oppoRatio);
+                System.out.println("DEBUG: oppoCoop is "+ oppoCoop);
+                System.out.println("DEBUG: oppoDefect is "+ oppoDefect);
+            } //The next two variables always show even if debug is off
             System.out.println("The player score is "+ oppoScore);
             System.out.println("The comp score is "+ compScore);
             }
