@@ -5,7 +5,7 @@ import java.lang.*;
  * Write a description of class Prober here.
  *
  * @author (Felix)
- * @version (Beta 3.0)
+ * @version (Beta 3.1)
  * DISCLAIMER: This program and the decisions it make's will be labeled to as "the program/computer" & "the program/computer's moves"
  * The individual opposing the computer whether they be human or another computer is labeled as "the opponent/player"
  *
@@ -15,6 +15,8 @@ public class PrisonersDilemma
     String clarifyInput(String tempS){ //clarifyInput is designed to make the code more user-friendly, so
                                        //^ they don't have to specifically type a lowercase c to cooperate.
         tempS=tempS.toLowerCase(); // This line is turning the player's input into lowercase.
+        int CLfailsafe=tempS.length(); //This is the beginning of the fail safe incase the user enters an input < 1 character
+        if(CLfailsafe<1){tempS="?";} //This is the actual failsafe that makes sure there's an input
         char ch = tempS.charAt(0); // This line is turning the string into a char so I can use charAt.
         String outputS = String.valueOf(ch); //This line is turning the char back into a String.
         return outputS; // This line is sending the clarified input back to the code.
